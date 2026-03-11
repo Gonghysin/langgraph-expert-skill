@@ -89,3 +89,182 @@ description: "Build production-grade AI agents with LangGraph. TRIGGER when: use
 2. **匹配模式** - 根据上述决策树找到最合适的模式
 3. **读取文档** - 从 references/patterns/ 读取对应的模式文档
 4. **提供指导** - 基于模式文档提供架构设计和实现建议
+
+## 阅读指南
+
+### 架构模式文档
+
+**核心模式**（按使用频率排序）：
+
+1. **references/patterns/react.md**
+   - 最常用的模式
+   - 工具调用 + 推理循环
+   - 适合大多数 Agent 场景
+
+2. **references/patterns/plan-and-execute.md**
+   - 先规划后执行
+   - 适合复杂多步骤任务
+
+3. **references/patterns/human-in-the-loop.md**
+   - 人工审批和输入
+   - 适合需要人工监督的场景
+
+4. **references/patterns/reflection.md**
+   - 自我反思和改进
+   - 适合需要质量保证的场景
+
+**扩展模式**（多 Agent 协作）：
+
+5. **references/patterns/multi-agent.md**
+   - 多个平等 Agent 协作
+   - 适合分布式任务处理
+
+6. **references/patterns/supervisor.md**
+   - 中心协调者模式
+   - 适合需要任务分配的场景
+
+7. **references/patterns/hierarchical.md**
+   - 层级化 Agent 架构
+   - 适合大型复杂系统
+
+### 最佳实践和指导
+
+**必读文档**：
+
+- **references/best-practices.md**
+  - 状态管理最佳实践
+  - 错误处理策略
+  - 性能优化建议
+  - 测试策略
+
+- **references/common-pitfalls.md**
+  - 常见错误和陷阱
+  - 调试技巧
+  - 问题排查指南
+
+- **references/testing-guide.md**
+  - 单元测试策略
+  - 集成测试方法
+  - Mock 和 Stub 技巧
+
+### 工具脚本
+
+- **scripts/validate_graph.py**
+  - 验证图结构完整性
+  - 检查节点和边的定义
+  - 发现潜在的死循环
+
+- **scripts/visualize_graph.py**
+  - 生成图的可视化
+  - 帮助理解复杂的状态流转
+
+## 使用示例
+
+### 示例 1：构建新的 Agent
+
+**用户请求**：
+> "我想构建一个能够搜索网络、分析内容并生成报告的 Agent"
+
+**Skill 工作流**：
+
+1. **理解需求**
+   ```
+   询问：
+   - 是否需要多次工具调用？
+   - 是否需要人工审批？
+   - 报告质量要求如何？
+   ```
+
+2. **推荐模式**
+   ```
+   基于需求，推荐：
+   - 主模式：ReAct（工具调用 + 推理）
+   - 可选：Reflection（提升报告质量）
+   ```
+
+3. **生成计划**
+   ```
+   调用 @superpowers:writing-plans
+   生成详细的实施计划
+   ```
+
+4. **提供指导**
+   ```
+   读取 references/patterns/react.md
+   展示代码结构和关键实现
+   ```
+
+5. **TDD 开发**
+   ```
+   调用 @superpowers:test-driven-development
+   先写测试，再实现功能
+   ```
+
+### 示例 2：调试循环问题
+
+**用户请求**：
+> "我的 Agent 陷入了无限循环，怎么办？"
+
+**Skill 工作流**：
+
+1. **识别问题**
+   ```
+   请求用户提供：
+   - 图定义代码
+   - 错误日志
+   - 预期行为
+   ```
+
+2. **查找陷阱**
+   ```
+   读取 references/common-pitfalls.md
+   查找"无限循环"相关章节
+   ```
+
+3. **提供方案**
+   ```
+   展示：
+   - 循环检测机制
+   - 最大迭代次数设置
+   - 条件边的正确使用
+   ```
+
+4. **验证修复**
+   ```
+   运行 scripts/validate_graph.py
+   建议添加循环检测测试
+   ```
+
+## 重要提示
+
+### 开发原则
+
+1. **DRY（Don't Repeat Yourself）**
+   - 复用模式文档中的代码结构
+   - 避免重复实现相同的逻辑
+
+2. **YAGNI（You Aren't Gonna Need It）**
+   - 从最简单的模式开始
+   - 只在需要时添加复杂性
+
+3. **TDD（Test-Driven Development）**
+   - 始终先写测试
+   - 使用 @superpowers:test-driven-development
+
+### 质量保证
+
+- **代码审查**：完成后调用 @superpowers:code-review
+- **图验证**：使用 scripts/validate_graph.py
+- **测试覆盖率**：确保 ≥80% 覆盖率
+
+### 性能考虑
+
+- **状态大小**：保持状态对象精简
+- **工具调用**：避免不必要的 LLM 调用
+- **并行执行**：利用 LangGraph 的并行能力
+
+### 安全注意事项
+
+- **输入验证**：验证所有外部输入
+- **错误处理**：优雅处理所有异常
+- **敏感数据**：不在状态中存储敏感信息
