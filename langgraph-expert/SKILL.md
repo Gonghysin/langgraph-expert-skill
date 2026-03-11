@@ -44,3 +44,48 @@ description: "Build production-grade AI agents with LangGraph. TRIGGER when: use
    - pyproject.toml
    - setup.py
    - *.py 文件
+
+2. **如果检测到 package.json 但没有 Python 文件**：
+   提示用户 LangGraph 主要支持 Python，建议使用 Python 实现
+
+3. **如果环境不明确**：
+   询问用户使用的编程语言
+
+## 模式选择决策树
+
+根据用户需求选择合适的 LangGraph 架构模式：
+
+```
+用户需求是什么？
+
+1. 需要工具调用和推理循环
+   └─> ReAct 模式
+   读取: references/patterns/react.md
+
+2. 需要先规划再执行
+   └─> Plan-and-Execute 模式
+   读取: references/patterns/plan-and-execute.md
+
+3. 需要人工审批或输入
+   └─> Human-in-the-Loop 模式
+   读取: references/patterns/human-in-the-loop.md
+
+4. 需要自我反思和改进
+   └─> Reflection 模式
+   读取: references/patterns/reflection.md
+
+5. 需要多个专门的 Agent 协作
+   ├─> 平等协作 → Multi-Agent 模式
+   │   读取: references/patterns/multi-agent.md
+   ├─> 有中心协调者 → Supervisor 模式
+   │   读取: references/patterns/supervisor.md
+   └─> 有层级关系 → Hierarchical 模式
+       读取: references/patterns/hierarchical.md
+```
+
+### 如何使用决策树
+
+1. **询问用户需求** - 了解用户想要实现什么功能
+2. **匹配模式** - 根据上述决策树找到最合适的模式
+3. **读取文档** - 从 references/patterns/ 读取对应的模式文档
+4. **提供指导** - 基于模式文档提供架构设计和实现建议
